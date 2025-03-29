@@ -1,0 +1,39 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "src/api/server.ts",
+  "license": "MIT",
+  "scripts": {
+    "start": "npx tsc && node dist/src/api/server.js",
+    "build": "npx tsc",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.23.0",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/joi": "^17.2.3",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.13.14",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
+    "eslint": "^9.23.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.5",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.3",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.28.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
