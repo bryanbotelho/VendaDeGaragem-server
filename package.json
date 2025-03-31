@@ -6,10 +6,12 @@
   "scripts": {
     "start": "npx tsc && node dist/src/api/server.js",
     "build": "npx tsc",
+    "prisma": "npx prisma generate",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules ."
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/joi": "^17.2.3",
@@ -31,10 +33,14 @@
     "typescript-eslint": "^8.28.0"
   },
   "dependencies": {
+    "@prisma/client": "^6.5.0",
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "joi": "^17.13.3",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^6.5.0",
+    "tsc": "^2.0.4"
   }
 }
