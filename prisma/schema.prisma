@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  email       String   @unique
+  senha       String
+  telefone    String
+  data_criacao DateTime @default(now())
+  active      Boolean  @default(true)
+  roles       UserRole[]
+  comments    Comment[]
+  ratingsGiven Rating[] @relation("ratingsGiven")
+  ratingsReceived Rating[] @relation("ratingsReceived")
+  products    Product[]
+
+  @@map("users")
+}
+
+model Role {
+  id    Int    @id @default(autoincrement())
+  nome  String @unique
+  users UserRole[]
+}
+
+model UserRole {
+  userId Int @map("user_id")
+  roleId Int @map("role_id")
+  user   User @relation(fields: [userId], references: [id])
+  role   Role @relation(fields: [roleId], references: [id])
+
+  @@id([userId, roleId])
+  @@map("user_roles")
+}
+
+model Product {
+  id            Int       @id @default(autoincrement())
+  nome          String
+  descricao     String?
+  preco_original Float
+  preco_desconto Float?
+  categoria     String
+  condicao      String
+  imagens       Json?
+  localizacao   String
+  telefone_contato String
+  data_criacao  DateTime  @default(now())
+  negociacao    Boolean   @default(false)
+  userId        Int
+  user          User      @relation(fields: [userId], references: [id])
+  comments      Comment[]
+}
+
+model Comment {
+  id         Int      @id @default(autoincrement())
+  produto_id Int
+  usuario_id Int
+  texto      String
+  data_criacao DateTime @default(now())
+  product    Product  @relation(fields: [produto_id], references: [id])
+  user       User     @relation(fields: [usuario_id], references: [id])
+}
+
+model Rating {
+  id          Int      @id @default(autoincrement())
+  avaliador_id Int
+  avaliado_id  Int
+  estrelas     Int
+  comentario   String?
+  data_criacao DateTime @default(now())
+  reviewer     User     @relation("ratingsGiven", fields: [avaliador_id], references: [id])
+  rated        User     @relation("ratingsReceived", fields: [avaliado_id], references: [id])
+}

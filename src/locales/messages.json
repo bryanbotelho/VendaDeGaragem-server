@@ -1,0 +1,38 @@
+{
+    "pt": {
+      "USER_EXISTS_EMAIL": "Já existe um usuário com esse e-mail.",
+      "USER_EXISTS_PHONE": "Já existe um usuário com esse telefone.",
+      "USER_CREATED": "Usuário cadastrado com sucesso.",
+      "USER_NO_EXISTE": "Usuario não encontrado.",
+      "PASSWORDS_DO_NOT_MATCH": "As senhas não são iguais.",
+      "EMAIL_INVALID": "O e-mail fornecido não é válido.",
+      "PHONE_INVALID": "O telefone fornecido não é válido.",
+      "FIELD_REQUIRED": "Campo obrigatório.",
+      "PASSWORD_TOO_WEAK": "A senha deve conter pelo menos uma letra e um número.",
+      "CONFIRM_PASSWORD_MISMATCH": "A confirmação de senha deve ser igual à senha.",
+      "EMAIL_ALREADY_REGISTERED": "Este e-mail já está registrado.",
+      "PHONE_ALREADY_REGISTERED": "Este telefone já está registrado.",
+      "NOME_MIN_LENGTH": "O nome deve ter no mínimo 3 caracteres.",
+      "NOME_MAX_LENGTH": "O nome pode ter no máximo 30 caracteres.",
+      "INVALID_PASSWORD": "Senha inválida.",
+      "SERVER_ERROR": "Erro interno do servidor."
+    },
+    "en": {
+      "USER_EXISTS_EMAIL": "A user with this email already exists.",
+      "USER_EXISTS_PHONE": "A user with this phone number already exists.",
+      "USER_CREATED": "User successfully registered.",
+      "USER_NO_EXISTE": "User not found.",
+      "PASSWORDS_DO_NOT_MATCH": "Passwords do not match.",
+      "EMAIL_INVALID": "The provided email is invalid.",
+      "PHONE_INVALID": "The provided phone number is invalid.",
+      "FIELD_REQUIRED": "Field is required.",
+      "PASSWORD_TOO_WEAK": "Password must contain at least one letter and one number.",
+      "CONFIRM_PASSWORD_MISMATCH": "Confirm password must be the same as password.",
+      "EMAIL_ALREADY_REGISTERED": "This email is already registered.",
+      "PHONE_ALREADY_REGISTERED": "This phone number is already registered.",
+      "NOME_MIN_LENGTH": "Name must be at least 3 characters long.",
+      "NOME_MAX_LENGTH": "Name can be at most 30 characters long.",
+      "INVALID_PASSWORD": "Password invalid.",
+      "SERVER_ERROR": "Internal server error."
+    }
+  }
