@@ -3,7 +3,14 @@ import bcrypt from 'bcrypt';
 import Joi from 'joi';
 import crypto from 'crypto';
 
-import { CreatePayloadUser, LoginUser, ResultUser } from '../@types/user';
+import {
+    CreatePayloadUser,
+    LoginUser,
+    ResultUser,
+    RequestPasswordReset,
+    VerifyResetToken,
+    ResetPassword
+} from '../@types/user';
 import { PrismaClient } from '@prisma/client';
 import { getMessage } from '../utils/messageHelper';
 import {
@@ -65,10 +72,6 @@ class UserService {
                 return { status: 400, success: false, message: errorMessage };
             }
 
-            if (password !== confirmPassword) {
-                return { status: 400, success: false, message: getMessage('PASSWORDS_DO_NOT_MATCH', lang) };
-            }
-
             const existingUser = await this.prisma.user.findFirst({
                 where: { OR: [{ email }, { phone }] }
             });
@@ -107,7 +110,7 @@ class UserService {
         }
     }  
 
-    public static async requestPasswordReset(data: { email?: string; phone?: string }, lang: 'pt' | 'en' = 'pt') {
+    public static async requestPasswordReset(data: RequestPasswordReset, lang: 'pt' | 'en' = 'pt') {
         const { email, phone } = data;
 
         try {
@@ -120,31 +123,18 @@ class UserService {
 
             const { token, expiresAt } = await this.generatorResetToken();
 
-            if (email) {
-                const user = await this.prisma.user.findUnique({ where: { email } });
-                if (!user) return { status: 400, success: false, message: getMessage('USER_NO_EXISTE', lang) };
+            const user = email
+                ? await this.prisma.user.findUnique({ where: { email } })
+                : await this.prisma.user.findUnique({ where: { phone } });
 
-                await this.prisma.user.update({
-                    where: { email },
-                    data: { resetToken: token, resetTokenExpires: expiresAt },
-                });
+            if (!user) return { status: 400, success: false, message: getMessage('USER_NO_EXISTE', lang) };
 
-                return { status: 200, success: true, data: token };
-            }
+            await this.prisma.user.update({ 
+                where: { id: user.id },
+                data: { data: { resetToken: token, resetTokenExpires: expiresAt } }
+            });
 
-            if (phone) {
-                const user = await this.prisma.user.findUnique({ where: { phone } });
-                if (!user) return { status: 400, success: false, message: getMessage('USER_NO_EXISTE', lang) };
-
-                await this.prisma.user.update({
-                    where: { phone },
-                    data: { resetToken: token, resetTokenExpires: expiresAt },
-                });
-
-                return { status: 200, success: true, data: token };
-            }
-
-            return { status: 402, success: false, message: getMessage('SERVER_ERROR', lang) };
+            return { status: 200, success: true, data: token };
 
         } catch (error) {
             console.error(error);
@@ -159,10 +149,7 @@ class UserService {
         return { token, expiresAt };
     }
 
-    public static async verifyResetToken(
-        data: { email?: string, phone?: string, token: string }, 
-        lang: 'pt' | 'en' = 'pt'
-    ) {
+    public static async verifyResetToken(data: VerifyResetToken, lang: 'pt' | 'en' = 'pt') {
         const { token, email, phone } = data;
 
         try {
@@ -173,29 +160,16 @@ class UserService {
                 return { status: 400, success: false, message: errorMessage };
             }
 
-            if (email) {
-                const user = await this.prisma.user.findUnique({ where: { email } });
-                if (!user) return { status: 400, success: false, message: getMessage('USER_NO_EXISTE', lang) };
+            const user = email
+                ? await this.prisma.user.findUnique({ where: { email } })
+                : await this.prisma.user.findUnique({ where: { phone } });
 
-                const { success, message, status } = await this.validateToken(user, token, lang);
+            if (!user) return { status: 400, success: false, message: getMessage('USER_NO_EXISTE', lang) };
+            
+            const { success, message, status } = await this.validateToken(user, token, lang);
+            if (!success) return { status, success, message };
 
-                if (!success) return { status, success, message };
-
-                return { status, success, message: getMessage('SUCESS_TOKEN', lang) };
-            }
-
-            if (phone) {
-                const user = await this.prisma.user.findUnique({ where: { phone } });
-                if (!user) return { status: 400, success: false, message: getMessage('USER_NO_EXISTE', lang) }; 
-
-                const { success, message, status } = await this.validateToken(user, token, lang);
-
-                if (!success) return { status, success, message };
-
-                return { status, success, message: getMessage('SUCESS_TOKEN', lang) };
-            }
-
-            return { status: 500, success: false, message: getMessage('SERVER_ERROR', lang) };
+            return { status, success, message: getMessage('SUCESS_TOKEN', lang) };
 
         } catch (error) {
             console.error(error);
@@ -212,12 +186,9 @@ class UserService {
         return { status: 200, success: true };
     }
 
-    public static async resetPassword(
-        data: { email?: string, phone?: string, newPassword: string, confirmNewPassword: string, token: string },
-        lang: 'pt' | 'en' = 'pt'
-    ) {
+    public static async resetPassword(data: ResetPassword, lang: 'pt' | 'en' = 'pt') {
         try {
-            const { confirmNewPassword, newPassword, email, phone, token } = data;
+            const { newPassword, email, phone, token } = data;
 
             const validator: Joi.ValidationResult = resetPasswordSchema(lang).validate(data);
 
@@ -226,50 +197,28 @@ class UserService {
                 return { status: 400, success: false, message: errorMessage };
             }
 
-            if (newPassword !== confirmNewPassword)
-                return { status: 400, success: false, message: getMessage('PASSWORDS_DO_NOT_MATCH', lang) };
-
             const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-            if (email) {
-                const user = await this.prisma.user.findUnique({ where: { email } });
-                if (!user) return { status: 400, success: false, message: getMessage('USER_NO_EXISTE', lang) };
-                
-                const { success, message, status } = await this.validateToken(user, token, lang);
+            const user = email
+                ? await this.prisma.user.findUnique({ where: { email } })
+                : await this.prisma.user.findUnique({ where: { phone } });
 
-                if (!success) return { status, success, message };
+            if (!user) return { status: 400, success: false, message: getMessage('USER_NO_EXISTE', lang) };
+            
+            const { success, message, status } = await this.validateToken(user, token, lang);
+            if (!success) return { status, success, message };
 
-                await this.prisma.user.update({
-                    where: { email },
-                    data: { password: hashedPassword, resetToken: null, resetTokenExpires: null },
-                });
+            await this.prisma.user.update({
+                where: { id: user.id },
+                data: { password: hashedPassword, resetToken: null, resetTokenExpires: null },
+            });
 
-                return { success: true, status: 200, message: getMessage('PASSWORD_RESET_SUCESS', lang) };
-            }
-
-            if (phone) {
-                const user = await this.prisma.user.findUnique({ where: { phone } });
-                if (!user) return { status: 400, success: false, message: getMessage('USER_NO_EXISTE', lang) }; 
-
-                const { success, message, status } = await this.validateToken(user, token, lang);
-
-                if (!success) return { status, success, message };
-
-                await this.prisma.user.update({
-                    where: { phone },
-                    data: { password: hashedPassword, resetToken: null, resetTokenExpires: null },
-                });
-
-                return { success: true, status: 200, message: getMessage('PASSWORD_RESET_SUCESS', lang) };
-            }
-
-            return { success: false, status: 402, message: getMessage('SERVER_ERROR', lang) };
+            return { success: true, status: 200, message: getMessage('PASSWORD_RESET_SUCESS', lang) };
 
         } catch (error) {
             console.error(error);
             return { status: 500, success: false, message: getMessage('SERVER_ERROR', lang) };
         }
-        
     }
 }
 

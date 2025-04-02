@@ -47,3 +47,17 @@ export interface Role {
     name: string;
     users: ResultUserRole[];
 }
+
+export interface RequestPasswordReset {
+    email?: string;
+    phone?: string;
+}
+
+export interface VerifyResetToken extends RequestPasswordReset {
+    token: string;
+}
+
+export interface ResetPassword extends VerifyResetToken {
+    newPassword: string;
+    confirmNewPassword: string;
+}
