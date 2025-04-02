@@ -7,7 +7,12 @@
       "PASSWORDS_DO_NOT_MATCH": "As senhas não são iguais.",
       "EMAIL_INVALID": "O e-mail fornecido não é válido.",
       "PHONE_INVALID": "O telefone fornecido não é válido.",
-      "FIELD_REQUIRED": "Campo obrigatório.",
+      "FIELD_REQUIRED_NAME": "Campo 'nome' é obrigatório.",
+      "FIELD_REQUIRED_PASSWORD": "Campo 'senha' é obrigatório.",
+      "FIELD_REQUIRED_CONFIRMPASSWORD": "Campo 'confirmar senha' é obrigatório.",
+      "FIELD_REQUIRED_EMAIL": "Campo 'email' é obrigatório.",
+      "FIELD_REQUIRED_PHONE": "Campo 'telefone' é obrigatório.",
+      "FIELD_REQUIRED_TOKEN": "Campo 'token' é obrigatório.",
       "PASSWORD_TOO_WEAK": "A senha deve conter pelo menos uma letra e um número.",
       "CONFIRM_PASSWORD_MISMATCH": "A confirmação de senha deve ser igual à senha.",
       "EMAIL_ALREADY_REGISTERED": "Este e-mail já está registrado.",
@@ -15,7 +20,14 @@
       "NOME_MIN_LENGTH": "O nome deve ter no mínimo 3 caracteres.",
       "NOME_MAX_LENGTH": "O nome pode ter no máximo 30 caracteres.",
       "INVALID_PASSWORD": "Senha inválida.",
-      "SERVER_ERROR": "Erro interno do servidor."
+      "SERVER_ERROR": "Erro interno do servidor.",
+      "INVALID_TOKEN": "Token inválido.",
+      "EXPIRED_TOKEN": "Token expirado.",
+      "PASSWORD_RESET_SUCESS": "Senha redefinida com sucesso.",
+      "AT_LEAST_ONE_REQUIRED": "Nenhum dos campos email/telefone foi informado",
+      "TOKEN_LENGTH_INVALID": "O token deve ter exatamente 6 dígitos.",
+      "TOKEN_PATTERN_INVALID": "O token deve conter apenas números.",
+      "SUCESS_TOKEN": "Token validado."
     },
     "en": {
       "USER_EXISTS_EMAIL": "A user with this email already exists.",
@@ -25,7 +37,12 @@
       "PASSWORDS_DO_NOT_MATCH": "Passwords do not match.",
       "EMAIL_INVALID": "The provided email is invalid.",
       "PHONE_INVALID": "The provided phone number is invalid.",
-      "FIELD_REQUIRED": "Field is required.",
+      "FIELD_REQUIRED_NAME": "Field 'name' is required.",
+      "FIELD_REQUIRED_PASSWORD": "Field 'password' is required.",
+      "FIELD_REQUIRED_CONFIRMPASSWORD": "confirm password 'confirmar senha' is required.",
+      "FIELD_REQUIRED_EMAIL": "Field 'email' is required.",
+      "FIELD_REQUIRED_PHONE": "Field 'phone' is required.",
+      "FIELD_REQUIRED_TOKEN": "Field 'token' is required.",
       "PASSWORD_TOO_WEAK": "Password must contain at least one letter and one number.",
       "CONFIRM_PASSWORD_MISMATCH": "Confirm password must be the same as password.",
       "EMAIL_ALREADY_REGISTERED": "This email is already registered.",
@@ -33,6 +50,13 @@
       "NOME_MIN_LENGTH": "Name must be at least 3 characters long.",
       "NOME_MAX_LENGTH": "Name can be at most 30 characters long.",
       "INVALID_PASSWORD": "Password invalid.",
-      "SERVER_ERROR": "Internal server error."
+      "SERVER_ERROR": "Internal server error.",
+      "INVALID_TOKEN": "Invalid token.",
+      "EXPIRED_TOKEN": "Expired token.",
+      "PASSWORD_RESET_SUCESS": "Password reset successfully.",
+      "AT_LEAST_ONE_REQUIRED": "None of the email/phone fields were provided",
+      "TOKEN_LENGTH_INVALID": "The token must be exactly 6 digits long.",
+      "TOKEN_PATTERN_INVALID": "The token must contain only numbers.",
+      "SUCESS_TOKEN": "Validated token."
     }
   }
