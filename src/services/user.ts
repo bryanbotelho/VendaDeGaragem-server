@@ -13,6 +13,8 @@ import {
 } from '../@types/user';
 import { PrismaClient } from '@prisma/client';
 import { getMessage } from '../utils/messageHelper';
+import TwilioService from '../utils/sms';
+import MailService from '../utils/email';
 import {
     createUserSchema,
     loginUserSchema,
@@ -21,7 +23,7 @@ import {
     resetPasswordSchema
 } from '../schemas/user';
 
-const { SECRET = '123456' } = process.env;
+const { SECRET = '123456', MY_APP } = process.env;
 
 class UserService {
     private static prisma = new PrismaClient();
@@ -131,10 +133,16 @@ class UserService {
 
             await this.prisma.user.update({ 
                 where: { id: user.id },
-                data: { data: { resetToken: token, resetTokenExpires: expiresAt } }
+                data: { resetToken: token, resetTokenExpires: expiresAt }
             });
 
-            return { status: 200, success: true, data: token };
+            const { success } = email
+                ? await MailService.sendMail(email, 'Recuperação de Senha', `Seu código de verificação para ${MY_APP} é: ${token}`)
+                : await TwilioService.sendSMS(`+55${phone}`, `Seu código de verificação para ${MY_APP} é: ${token}`);
+
+            if (!success) return { success, status: 400, message: getMessage('ERROR_SERVICE_TOKEN', lang) };
+
+            return { status: 200, success: true, data: { token , ...data } };
 
         } catch (error) {
             console.error(error);

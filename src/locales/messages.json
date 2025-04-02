@@ -26,7 +26,8 @@
       "AT_LEAST_ONE_REQUIRED": "Nenhum dos campos email/telefone foi informado",
       "TOKEN_LENGTH_INVALID": "O token deve ter exatamente 6 dígitos.",
       "TOKEN_PATTERN_INVALID": "O token deve conter apenas números.",
-      "SUCESS_TOKEN": "Token validado."
+      "SUCESS_TOKEN": "Token validado.",
+      "ERROR_SERVICE_TOKEN": "Erro no envio do token"
     },
     "en": {
       "USER_EXISTS_EMAIL": "A user with this email already exists.",
@@ -55,6 +56,7 @@
       "AT_LEAST_ONE_REQUIRED": "None of the email/phone fields were provided",
       "TOKEN_LENGTH_INVALID": "The token must be exactly 6 digits long.",
       "TOKEN_PATTERN_INVALID": "The token must contain only numbers.",
-      "SUCESS_TOKEN": "Validated token."
+      "SUCESS_TOKEN": "Validated token.",
+      "ERROR_SERVICE_TOKEN": "Error sending token"
     }
   }

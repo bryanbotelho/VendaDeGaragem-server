@@ -20,7 +20,7 @@ class UserController {
         const { status, message, data, success } = await UserService.requestPasswordReset(req.body);
         if (!success) return res.status(status).json({ message, success });
 
-        return res.status(status).json({ result: { token: data }, success });
+        return res.status(status).json({ result: { ... data }, success });
     }
 
     public static async verifyResetToken(req: Request, res: Response): Promise<any> {

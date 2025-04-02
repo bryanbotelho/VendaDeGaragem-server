@@ -1,18 +1,35 @@
 import nodemailer from 'nodemailer';
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'seuemail@gmail.com',
-    pass: 'suasenha',
-  },
-});
+const { EMAIL_USER, EMAIL_PASS } = process.env;
 
-export const sendEmail = async (to: string, subject: string, text: string) => {
-  await transporter.sendMail({
-    from: 'seuemail@gmail.com',
-    to,
-    subject,
-    text,
-  });
-};
+class MailService {
+  private transporter;
+
+  constructor() {
+    this.transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: EMAIL_USER,
+        pass: EMAIL_PASS,
+      },
+    });
+  }
+
+  public async sendMail(to: string, subject: string, text: string) {
+    try {
+      const info = await this.transporter.sendMail({
+        from: `"Suporte do App" <${EMAIL_USER}>`,
+        to,
+        subject,
+        text,
+      });
+
+      return { success: true, data: info.messageId };
+    } catch (error) {
+      console.error('Erro ao enviar e-mail:', error);
+      return { success: false };
+    }
+  }
+}
+
+export default new MailService();
