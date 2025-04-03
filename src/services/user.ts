@@ -6,7 +6,7 @@ import { PrismaClient } from '@prisma/client';
 import { getMessage } from '../utils/messageHelper';
 import { createUserSchema, loginUserSchema } from '../schemas/user';
 
-const { SECRET = '123456' } = process.env;
+const { SECRET = '123' } = process.env;
 
 class UserService {
     private static prisma = new PrismaClient();
