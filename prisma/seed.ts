@@ -4,22 +4,31 @@ const prisma = new PrismaClient();
 
 async function main() {
     await prisma.role.upsert({
-        where: { id: 1 },
+        where: { name: 'comun' },
         update: {},
-        create: {
-            id: 1,
-            name: 'comun',
-        },
+        create: { name: 'comun' },
     });
 
     await prisma.role.upsert({
-        where: { id: 2 },
+        where: { name: 'admin' },
         update: {},
-        create: {
-            id: 2,
-            name: 'admin',
-        },
+        create: { name: 'admin' },
     });
+
+    const userCount = await prisma.user.count();
+    if (userCount === 0) {
+        await prisma.user.create({
+            data: {
+                name: 'Usuário Admin',
+                email: 'admin@email.com',
+                password: '12345',
+                phone: '99999999999',
+                role: {
+                    connect: { name: 'admin' }
+                }
+            }
+        });
+    }
 }
 
 main()

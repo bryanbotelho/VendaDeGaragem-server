@@ -162,3 +162,15 @@ export const resetPasswordSchema = (lang: 'pt' | 'en' = 'pt') => {
         'object.missing': getMessage('AT_LEAST_ONE_REQUIRED', lang)
     });
 };
+
+export const getUserByEmailSchema = (lang: 'pt' | 'en' = 'pt') => {
+    return Joi.object({
+        email: Joi.string()
+            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+            .required()
+            .messages({
+                'string.base': getMessage('EMAIL_INVALID', lang),
+                'string.email': getMessage('EMAIL_INVALID', lang)
+            }),
+    });
+};

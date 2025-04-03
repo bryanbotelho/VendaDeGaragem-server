@@ -8,38 +8,29 @@ datasource db {
 }
 
 model User {
-  id                Int        @id @default(autoincrement())
+  id                Int       @id @default(autoincrement())
   name              String
-  email             String     @unique
+  email             String    @unique
   password          String
-  phone             String     @unique
-  createdAt         DateTime   @default(now())
-  active            Boolean    @default(true)
+  phone             String    @unique
+  createdAt         DateTime  @default(now())
+  active            Boolean   @default(true)
   resetToken        String?
   resetTokenExpires DateTime?
-  roles             UserRole[]
+  roleId            Int
+  role              Role      @relation(fields: [roleId], references: [id])
   comments          Comment[]
-  ratingsGiven      Rating[]   @relation("ratingsGiven")
-  ratingsReceived   Rating[]   @relation("ratingsReceived")
+  ratingsGiven      Rating[]  @relation("ratingsGiven")
+  ratingsReceived   Rating[]  @relation("ratingsReceived")
   products          Product[]
 
   @@map("users")
 }
 
 model Role {
-  id    Int        @id @default(autoincrement())
-  name  String     @unique
-  users UserRole[]
-}
-
-model UserRole {
-  userId Int  @map("user_id")
-  roleId Int  @map("role_id")
-  user   User @relation(fields: [userId], references: [id])
-  role   Role @relation(fields: [roleId], references: [id])
-
-  @@id([userId, roleId])
-  @@map("user_roles")
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  users User[]
 }
 
 model Product {
