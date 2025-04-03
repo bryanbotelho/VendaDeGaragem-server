@@ -6,7 +6,10 @@
   "scripts": {
     "start": "npx tsc && node dist/src/api/server.js",
     "build": "npx tsc",
-    "prisma": "npx prisma generate",
+    "prisma": "npx prisma format && npx prisma generate",
+    "seed": "ts-node --transpile-only prisma/seed.ts",
+    "migrate": "npx prisma migrate dev --name",
+    "rmpack": "rm -rf node_modules yarn.lock dist",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules ."
   },
   "devDependencies": {
@@ -17,6 +20,7 @@
     "@types/joi": "^17.2.3",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.13.14",
+    "@types/nodemailer": "^6.4.17",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
     "eslint": "^9.23.0",
@@ -40,7 +44,9 @@
     "express": "^4.21.2",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.10.0",
     "prisma": "^6.5.0",
-    "tsc": "^2.0.4"
+    "tsc": "^2.0.4",
+    "twilio": "^5.5.1"
   }
 }
