@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 import UserRouter from '../routes/user';
 
 dotenv.config();
-// import MiddlewareError from '../middlewares/error';
 
 class App {
   public app: Application;
