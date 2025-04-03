@@ -55,6 +55,7 @@ class UserService {
             const validPassword = await bcrypt.compare((password as string), user.password);
             if (!validPassword) return { status: 401, success: false, message: getMessage('INVALID_PASSWORD', this.lang as 'pt') };
                     
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { password: _, ...newUser } = user;
             const token = jwt.sign({ data: newUser }, SECRET, { expiresIn: '1h' });
         
