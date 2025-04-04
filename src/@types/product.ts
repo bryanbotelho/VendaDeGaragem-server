@@ -18,3 +18,13 @@ export interface ResultProduct {
     user: ResultUser;
     comments: ResultComment[];
 }
+export interface CreateProduct {
+    name: string;
+    originalPrice: number;
+    description?: string;
+    category: string;
+    condition: string;
+    images?: string;
+    location: string;
+    contactPhone: string;
+}
