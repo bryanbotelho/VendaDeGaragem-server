@@ -22,7 +22,7 @@ export interface CreateProduct {
     name: string;
     originalPrice: number;
     description?: string;
-    category: string;
+    categoryId: number;
     condition: string;
     images?: string;
     location: string;

@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import UserRouter from '../routes/user';
+import ProductRouter from '../routes/product';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ class App {
 
   private routes(): void {
     this.app.use('/user', UserRouter);
+    this.app.use('/product', ProductRouter);
   }
 
   public getApp(): Application {
