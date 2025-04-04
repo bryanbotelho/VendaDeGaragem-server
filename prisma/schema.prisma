@@ -39,16 +39,23 @@ model Product {
   description   String?
   originalPrice Float
   discountPrice Float?
-  category      String
   condition     String
   images        Json?
   location      String
   contactPhone  String
   createdAt     DateTime  @default(now())
   negotiable    Boolean   @default(false)
+  category      Category  @relation(fields: [categoryId], references: [id])
+  categoryId    Int
   userId        Int
   user          User      @relation(fields: [userId], references: [id])
   comments      Comment[]
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[]
 }
 
 model Comment {
