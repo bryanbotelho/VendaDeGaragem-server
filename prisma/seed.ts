@@ -1,6 +1,18 @@
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
+
+const categories = [
+    'Eletrônicos',
+    'Roupas',
+    'Livros',
+    'Móveis',
+    'Brinquedos',
+    'Esportes',
+    'Ferramentas',
+    'Colecionáveis',
+    'Utensílios domésticos',
+    'Outros'
+];
 
 async function main() {
     await prisma.role.upsert({
@@ -14,6 +26,16 @@ async function main() {
         update: {},
         create: { name: 'admin' },
     });
+
+    await Promise.all(
+        categories.map(name =>
+          prisma.category.upsert({
+            where: { name },
+            update: {},
+            create: { name },
+          })
+        )
+    );
 
     const userCount = await prisma.user.count();
     if (userCount === 0) {
