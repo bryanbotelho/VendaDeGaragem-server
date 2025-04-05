@@ -80,20 +80,10 @@ class UserService {
                 return { status: 400, success: false, message: errorMessage };
             }
 
-            const existingUser = await this.prisma.user.findFirst({
-                where: { OR: [{ email }, { phone }] }
-            });
-
-            if (existingUser) {
-                const message = existingUser.email === email 
-                    ? getMessage('USER_EXISTS_EMAIL', this.lang as 'pt') 
-                    : getMessage('USER_EXISTS_PHONE', this.lang as 'pt');
-
-                return { status: 409, success: false, message };
-            } 
+            const { success, message } = await this.validEmailPhone(email, phone);
+            if (!success) return { status: 409, success: false, message };
 
             const hashedPassword = await bcrypt.hash(password, 10);
-
             await this.prisma.user.create({
                 data: {
                     name,
@@ -110,7 +100,27 @@ class UserService {
             console.error(error);
             return { status: 500, success: false, message: getMessage('SERVER_ERROR', this.lang as 'pt') };
         }
-    }  
+    } 
+
+    async validEmailPhone(email: string, phone: string): Promise<{ success: boolean, message?: string }> {
+        const existingEmail = await this.prisma.user.findUnique({
+            where: { email },
+        });
+        
+        if (existingEmail) {
+            return { success: false, message: getMessage('USER_EXISTS_EMAIL', this.lang as 'pt') };
+        }
+        
+        const existingPhone = await this.prisma.user.findUnique({
+            where: { phone },
+        });
+        
+        if (existingPhone) {
+            return { success: false, message: getMessage('USER_EXISTS_PHONE', this.lang as 'pt') };
+        }
+
+        return { success: true };
+    }
 
     async requestPasswordReset(data: RequestPasswordReset) {
         const { email, phone } = data;

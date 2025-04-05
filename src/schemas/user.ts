@@ -4,6 +4,7 @@ import { getMessage } from '../utils/messageHelper';
 export const createUserSchema = (lang: 'pt' | 'en' = 'pt') => {
     return Joi.object({
         name: Joi.string()
+            .trim()
             .min(3)
             .max(30)
             .required()
@@ -32,6 +33,7 @@ export const createUserSchema = (lang: 'pt' | 'en' = 'pt') => {
             }),
 
         email: Joi.string()
+            .trim()
             .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
             .required()
             .messages({
@@ -41,6 +43,7 @@ export const createUserSchema = (lang: 'pt' | 'en' = 'pt') => {
             }),
 
         phone: Joi.string()
+            .trim()
             .required()
             .messages({
                 'string.base': getMessage('PHONE_INVALID', lang),
@@ -55,18 +58,16 @@ export const loginUserSchema = (lang: 'pt' | 'en' = 'pt') => {
             .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
             .required()
             .messages({
-                'string.base': getMessage('EMAIL_INVALID', lang),
-                'string.email': getMessage('EMAIL_INVALID', lang),
-                'any.required': getMessage('FIELD_REQUIRED_EMAIL', lang)
+                'string.base': getMessage('LOGIN_ERROR', lang),
+                'string.email': getMessage('LOGIN_ERROR', lang),
+                'any.required': getMessage('LOGIN_ERROR', lang)
             }),
 
         password: Joi.string()
-            .pattern(new RegExp('^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z\\d!@#\\$%\\^&\\*()_+\\-=\\[\\]{};:"\\|,.<>\\/?]{6,}$'))
             .required()
             .messages({
-                'string.base': getMessage('PASSWORD_TOO_WEAK', lang),
-                'string.pattern.base': getMessage('PASSWORD_TOO_WEAK', lang),
-                'any.required': getMessage('FIELD_REQUIRED_PASSWORD', lang)
+                'string.base': getMessage('LOGIN_ERROR', lang),
+                'any.required': getMessage('LOGIN_ERROR', lang)
             }),
         });
 };

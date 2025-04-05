@@ -1,5 +1,7 @@
 import app from './index';
 
-const { PORT } = process.env;
+const PORT = Number(process.env.PORT) || 3333;
 
-app.listen(PORT, () => console.log(`Online na porta ${PORT}`));
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
