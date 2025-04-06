@@ -1,6 +1,9 @@
+import Joi from 'joi';
 import { PrismaClient } from '@prisma/client';
 import { CreateProduct } from '../@types/product';
 import { getMessage } from 'src/utils/messageHelper';
+import { CreateProductSchema } from 'src/schemas/product';
+
 
 
 
@@ -15,6 +18,14 @@ class ProductService {
   async create(data: CreateProduct, user: any){
     const { categoryId, conditionId, contactPhone, location, name, originalPrice, description, images } = data;
     try {
+
+      const validator: Joi.ValidationResult = CreateProductSchema(this.lang as 'pt')
+        .validate({ name, originalPrice, categoryId, location, contactPhone, conditionId });
+
+        if(validator.error){
+          const errorMessage = validator.error.details.map(err => err.message).join(', ');
+          return { status: 400, success: false, message: errorMessage};
+        }
 
       await this.prisma.product.create({
 
