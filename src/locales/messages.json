@@ -29,7 +29,18 @@
       "SUCESS_TOKEN": "Token validado.",
       "ERROR_SERVICE_TOKEN": "Erro no envio do token",
       "PRODUCT_CREATE_SUCCESS": "Produto criado com sucesso",
-      "LOGIN_ERROR": "E-mail ou senha invalido."
+      "LOGIN_ERROR": "E-mail ou senha invalido.",
+      "ORIGINAL_PRICE_THAN_ZERO": "O preço original deve ser maior que zero.",
+      "FIELD_REQUIRED_ORIGINAL_PRICE": "O preço original é obrigatório.",
+      "ORIGINAL_PRICE_INVALID_": "O preço original deve ser um número.",
+      "LOCATION_INVALID": "O endereço não é válido.",
+      "LOCATION_EMPTY": "O endereço é obrigatório.",
+      "LOCATION_MIN_LENGTH": "O endereço deve ter no mínimo 3 caracteres.",
+      "LOCATION_MAX_LENGTH": "O endereço deve ter no máximo 50 caracteres.",
+      "CONTACT_PHONE_INVALID": "O telefone de contato deve ser uma string.",
+      "CONTACT_PHONE_PATTERN_INVALID": "O telefone de contato está inválido.",
+      "CONTACT_PHONE_EMPTY": "O telefone de contato é obrigatório."
+
     },
     "en": {
       "USER_EXISTS_EMAIL": "A user with this email already exists.",
@@ -59,8 +70,19 @@
       "TOKEN_LENGTH_INVALID": "The token must be exactly 6 digits long.",
       "TOKEN_PATTERN_INVALID": "The token must contain only numbers.",
       "SUCESS_TOKEN": "Validated token.",
-      "ERROR_SERVICE_TOKEN": "Error sending token",
-      "PRODUCT_CREATE_SUCCESS": "Successfully create Product",
-      "LOGIN_ERROR": "E-mail or senha invalid."
+      "ERROR_SERVICE_TOKEN": "Error sending token.",
+      "PRODUCT_CREATE_SUCCESS": "Successfully create Product.",
+      "LOGIN_ERROR": "E-mail or senha invalid.",
+      "ORIGINAL_PRICE_TOO_WEAK": "The original price must be greater than zero.",
+      "FIELD_REQUIRED_ORIGINAL_PRICE": "The original price is required.",
+      "ORIGINAL_PRICE_INVALID_": "The original price must be a number.",
+      "LOCATION_INVALID": "The address is not valid.",
+      "LOCATION_EMPTY": "The address is required.",
+      "LOCATION_MIN_LENGTH": "The address must have at least 3 characters.",
+      "LOCATION_MAX_LENGTH": "The address must have a maximum of 50 characters.",
+      "CONTACT_PHONE_INVALID": "The contact phone number must be a string.",
+      "CONTACT_PHONE_PATTERN_INVALID": "The contact phone number is invalid.",
+      "CONTACT_PHONE_EMPTY": "The contact phone number is required."
+
     }
   }
