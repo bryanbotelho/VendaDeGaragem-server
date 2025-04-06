@@ -14,6 +14,13 @@ const categories = [
     'Outros'
 ];
 
+const conditions = [
+    'Novo',
+    'Semi-novo',
+    'Usado',
+    'Para peças ou conserto'
+];
+
 async function main() {
     await prisma.role.upsert({
         where: { name: 'comun' },
@@ -30,6 +37,16 @@ async function main() {
     await Promise.all(
         categories.map(name =>
           prisma.category.upsert({
+            where: { name },
+            update: {},
+            create: { name },
+          })
+        )
+    );
+
+    await Promise.all(
+        conditions.map(name =>
+          prisma.condition.upsert({
             where: { name },
             update: {},
             create: { name },

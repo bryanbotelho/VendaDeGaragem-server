@@ -28,7 +28,8 @@
       "TOKEN_PATTERN_INVALID": "O token deve conter apenas números.",
       "SUCESS_TOKEN": "Token validado.",
       "ERROR_SERVICE_TOKEN": "Erro no envio do token",
-      "PRODUCT_CREATE_SUCCESS": "Produto criado com sucesso"
+      "PRODUCT_CREATE_SUCCESS": "Produto criado com sucesso",
+      "LOGIN_ERROR": "E-mail ou senha invalido."
     },
     "en": {
       "USER_EXISTS_EMAIL": "A user with this email already exists.",
@@ -59,6 +60,7 @@
       "TOKEN_PATTERN_INVALID": "The token must contain only numbers.",
       "SUCESS_TOKEN": "Validated token.",
       "ERROR_SERVICE_TOKEN": "Error sending token",
-      "PRODUCT_CREATE_SUCCESS": "Successfully create Product"
+      "PRODUCT_CREATE_SUCCESS": "Successfully create Product",
+      "LOGIN_ERROR": "E-mail or senha invalid."
     }
   }
