@@ -13,7 +13,7 @@ class ProductService {
     }
   
   async create(data: CreateProduct, user: any){
-    const { categoryId, condition, contactPhone, location, name, originalPrice, description, images } = data;
+    const { categoryId, conditionId, contactPhone, location, name, originalPrice, description, images } = data;
     try {
 
       await this.prisma.product.create({
@@ -25,7 +25,9 @@ class ProductService {
           category: {
             connect: { id: categoryId }
           },
-          condition, 
+          condition:{
+            connect: {id: conditionId }
+          },
           contactPhone,
           location,
           name,
