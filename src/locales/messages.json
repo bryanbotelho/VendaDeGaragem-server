@@ -83,6 +83,7 @@
     "LOGIN_ERROR": "E-mail or senha invalid.",
     "ORIGINAL_PRICE_TOO_WEAK": "The original price must be greater than zero.",
     "FIELD_REQUIRED_ORIGINAL_PRICE": "The original price is required.",
+    "ORIGINAL_PRICE_THAN_ZERO": "The original price must be greater than zero.",
     "ORIGINAL_PRICE_INVALID": "The original price must be a number.",
     "LOCATION_INVALID": "The address is not valid.",
     "LOCATION_EMPTY": "The address is required.",

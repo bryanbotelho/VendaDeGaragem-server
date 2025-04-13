@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import ProductService from '../services/product';
 import { MyRequest } from '../@types/auth';
+import { ResultUser } from 'src/@types/user';
 
 
 class ProductController {
@@ -12,5 +13,16 @@ class ProductController {
     return res.status(status).json({ message, success });
   }
 
+
+  async getProductByUser ( req: MyRequest, res: Response): Promise <any> {
+    const { data, success, status, message } = await ProductService.getProductByUser(req.user as ResultUser);
+    if (!success) return res.status(status).json({ message, success });
+
+    return res.status(status).json({ success, result:data });
+
+  };
+  
+
 }
+
 export default new ProductController();
