@@ -7,4 +7,6 @@ const router = Router();
 router.post('/create',AuthMiddleware.validateToken, ProductController.create);
 router.get('/getByUser', AuthMiddleware.validateToken, ProductController.getProductByUser);
 
+router.get('/getProductAll', ProductController.getProductAll);
+
 export default router;

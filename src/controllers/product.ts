@@ -22,6 +22,12 @@ class ProductController {
 
   };
   
+  async getProductAll  (req: MyRequest, res: Response): Promise <any> {
+    const { message, success, status, data: allproduct } = await ProductService.getProductAll(req.body);
+    if (!success) return res.status(status).json({ message, success, });
+    
+    return res.status(status).json({ success, message, data: allproduct });
+  }
 
 }
 

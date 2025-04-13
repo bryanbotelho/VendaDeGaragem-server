@@ -4,6 +4,8 @@ import { CreateProduct } from '../@types/product';
 import { getMessage } from 'src/utils/messageHelper';
 import { CreateProductSchema } from 'src/schemas/product';
 import { ResultUser } from 'src/@types/user';
+import { Message } from 'twilio/lib/twiml/MessagingResponse';
+import product from '@controllers/product';
 
 
 
@@ -71,6 +73,29 @@ class ProductService {
         }
     }
 
+
+    async getProductAll(user: any) {
+        try {
+            const allproduct = await this.prisma.product.findMany({
+                select: {
+                    userId: true,
+                    id: true,
+                    name: true,
+                    originalPrice: true,
+                    discountPrice: true,
+                    conditionId: true,
+                    categoryId: true,
+                    location: true,
+                    contactPhone: true,
+                },
+            });
+            return { status: 200, success: true, data: allproduct };
+            
+        } catch (error) {
+            console.error(error);
+            return { status: 500, success: false, message: getMessage('SERVER_ERROR', this.lang as 'pt') };
+        }
+    }
 
 }
 export default new ProductService();
