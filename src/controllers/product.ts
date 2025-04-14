@@ -14,6 +14,14 @@ class ProductController {
   }
 
 
+  // async updateProduct( req: MyRequest, res: Response): Promise <any> {
+  //   const { data, success, status, message } = await ProductService.updateProduct(req.body, req.user as ResultUser);
+  //   if (!success) return res.status(status).json({ message, success });
+
+  //   return res.status(status).json({ success, message, data });
+  // }
+
+
   async getProductByUser ( req: MyRequest, res: Response): Promise <any> {
     const { data, success, status, message } = await ProductService.getProductByUser(req.user as ResultUser);
     if (!success) return res.status(status).json({ message, success });

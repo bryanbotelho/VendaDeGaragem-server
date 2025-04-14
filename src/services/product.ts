@@ -1,14 +1,9 @@
 import Joi from 'joi';
 import { PrismaClient } from '@prisma/client';
-import { CreateProduct } from '../@types/product';
+import { CreateProduct, ResultProduct } from '../@types/product';
 import { getMessage } from 'src/utils/messageHelper';
-import { CreateProductSchema } from 'src/schemas/product';
+import { CreateProductSchema, UpdateProductSchema } from 'src/schemas/product';
 import { ResultUser } from 'src/@types/user';
-import { Message } from 'twilio/lib/twiml/MessagingResponse';
-import product from '@controllers/product';
-
-
-
 
 class ProductService {
     private prisma: PrismaClient;
@@ -58,6 +53,55 @@ class ProductService {
             return { status: 500, success: false, message: getMessage('SERVER_ERROR', this.lang as 'pt') };
         }
     }
+
+    // async updateProduct(data: ResultProduct, user: ResultUser ) {
+    //     const { id ,categoryId, conditionId, contactPhone, location, name, originalPrice, description, images } = data;
+    //     try {
+    //         const validator: Joi.ValidationResult = UpdateProductSchema(this.lang as 'pt')
+    //             .validate({ name, originalPrice, categoryId, location, contactPhone, conditionId, description, images });
+
+    //         if (validator.error) {
+    //             const errorMessage = validator.error.details.map(err => err.message).join(', ');
+    //             return { status: 400, success: false, message: errorMessage };
+    //         }
+
+    //         const existingProduct = await this.prisma.product.findUnique({
+    //             where: { id: id }
+    //         });
+
+    //         if(!existingProduct){
+    //             return { status: 404, success: false, message: getMessage('PRODUCT_NOT_FOUND', this.lang as 'pt') };
+    //         }
+
+    //         if(existingProduct.userId !== user.id){
+    //             return { status: 403, success: false, message: getMessage('USER_NOT_ALLOWED', this.lang as 'pt') };
+    //         }
+            
+    //         await this.prisma.product.update({
+    //             where: { id: id },
+    //             data: {
+    //                 category: {
+    //                     connect: { id: categoryId }
+    //                 },
+    //                 condition: {
+    //                     connect: { id: conditionId }
+    //                 },
+    //                 contactPhone,
+    //                 location,
+    //                 name,
+    //                 originalPrice,
+    //                 description,
+    //                 images,
+    //             }
+    //         });
+        
+    //         return { status: 200, success: true, message: getMessage('PRODUCT_UPDATE_SUCESSFULL', this.lang as 'pt'), data};
+    //     }catch (error) {
+    //             console.error(error);
+    //             return { status: 500, success: false, message: getMessage('SERVER_ERROR', this.lang as 'pt') };
+    //     }
+    // }
+
 
 
     async getProductByUser(user: ResultUser) {

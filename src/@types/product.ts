@@ -7,8 +7,8 @@ export interface ResultProduct {
     description?: string;
     originalPrice: number;
     discountPrice?: number;
-    category: string;
-    condition: string;
+    categoryId: number;
+    conditionId: number;
     images?: string;
     location: string;
     contactPhone: string;
@@ -27,4 +27,18 @@ export interface CreateProduct {
     images?: string;
     location: string;
     contactPhone: string;
+}
+export interface updateProduct {
+    name: string;
+    description?: string;
+    originalPrice: number;
+    discountPrice?: number;
+    categoryId: number;
+    conditionId: number;
+    images?: string;
+    location: string;
+    contactPhone: string;
+    createdAt: Date;
+    negotiable: boolean;
+    userId: number;
 }

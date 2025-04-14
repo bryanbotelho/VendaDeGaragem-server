@@ -9,4 +9,6 @@ router.get('/getByUser', AuthMiddleware.validateToken, ProductController.getProd
 
 router.get('/getProductAll', ProductController.getProductAll);
 
+// router.put('/updateproduct/:id ', AuthMiddleware.validateToken, ProductController.updateProduct);
+
 export default router;

@@ -4,6 +4,7 @@
     "USER_EXISTS_PHONE": "Já existe um usuário com esse telefone.",
     "USER_CREATED": "Usuário cadastrado com sucesso.",
     "USER_NO_EXISTE": "Usuario não encontrado.",
+    "USER_NOT_ALLOWED": "Usuário não tem permissão para alterar",
     "EMAIL_INVALID": "O e-mail fornecido não é válido.",
     "PHONE_INVALID": "O telefone fornecido não é válido.",
     "FIELD_REQUIRED_NAME": "Campo 'nome' é obrigatório.",
@@ -29,6 +30,8 @@
     "SUCESS_TOKEN": "Token validado.",
     "ERROR_SERVICE_TOKEN": "Erro no envio do token",
     "PRODUCT_CREATE_SUCCESS": "Produto criado com sucesso",
+    "PRODUCT_NOT_FOUND": "Produto não encontrado",
+    "PRODUCT_UPDATE_SUCESSFULL": "Produto atualizado com sucesso",
     "LOGIN_ERROR": "E-mail ou senha invalido.",
     "ORIGINAL_PRICE_THAN_ZERO": "O preço original deve ser maior que zero.",
     "FIELD_REQUIRED_ORIGINAL_PRICE": "O preço original é obrigatório.",
@@ -49,12 +52,15 @@
     "CONDITION_ID_MIN_LENGTH": "O valor deve ser conter pelo menos 1 número.",
     "CONDITION_ID_EMPTY": "O campo não pode ser vazio.",
     "CONDITION_ID_REQUIRED": "Este campo é obrigatório."
+  
+    
   },
   "en": {
     "USER_EXISTS_EMAIL": "A user with this email already exists.",
     "USER_EXISTS_PHONE": "A user with this phone number already exists.",
     "USER_CREATED": "User successfully registered.",
     "USER_NO_EXISTE": "User not found.",
+    "USER_NOT_ALLOWED": "User does not have permission to change",
     "EMAIL_INVALID": "The provided email is invalid.",
     "PHONE_INVALID": "The provided phone number is invalid.",
     "FIELD_REQUIRED_NAME": "Field 'name' is required.",
@@ -100,6 +106,8 @@
     "CONDITION_ID_GREATER": "The value must be greater than the minimum allowed value.",
     "CONDITION_ID_MIN_LENGTH": "The value must be greater than zero",
     "CONDITION_ID_EMPTY": "The field cannot be empty.",
-    "CONDITION_ID_REQUIRED": "This field is required."
+    "CONDITION_ID_REQUIRED": "This field is required.",
+    "PRODUCT_NOT_FOUND": "Product not found",
+    "PRODUCT_UPDATE_SUCESSFULL": "Product updated successfully"
   }
 }
