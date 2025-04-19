@@ -36,7 +36,7 @@ model Role {
 model Product {
   id            Int       @id @default(autoincrement())
   name          String
-  description   String?
+  description   String
   originalPrice Float
   discountPrice Float?
   condition     Condition @relation(fields: [conditionId], references: [id])

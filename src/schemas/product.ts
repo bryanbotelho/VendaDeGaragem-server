@@ -69,6 +69,34 @@ export const CreateProductSchema = (lang: 'pt' | 'en' = 'pt') => {
             'string.empty': getMessage('CONTACT_PHONE_EMPTY', lang),
         }),
     
+        description: Joi.string()
+        .min(10)
+        .max(300)
+        .required()
+        .messages({
+            'string.base': getMessage('DESCRIPTION_INVALID', lang),
+            'string.min': getMessage('DESCRIPTION_TOO_SHORT', lang),
+            'string.max': getMessage('DESCRIPTION_TOO_LONG', lang),
+            'string.required': getMessage('FIELD_REQUIRED_DESCRIPTION', lang),
+        }),
+
+        images: Joi.array()
+        .items(Joi.string().uri())
+        .min(1)
+        .required()
+        .messages({
+            'array.base': getMessage('IMAGES_INVALID', lang),
+            'array.min': getMessage('IMAGES_MIN_ONE', lang),
+            'array.required': getMessage('FIELD_REQUIRED_IMAGES', lang),
+        }),
+
+        negotiable: Joi.boolean()
+        .required()
+        .messages({
+            'boolean.base': getMessage('NEGOTIABLE_INVALID', lang),
+            'any.required': getMessage('FIELD_REQUIRED_NEGOTIABLE', lang),
+        })
+
     });
 };
 // export const UpdateProductSchema = (lang: 'pt' | 'en' = 'pt') => {

@@ -1,7 +1,8 @@
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import ProductService from '../services/product';
 import { MyRequest } from '../@types/auth';
 import { ResultUser } from 'src/@types/user';
+import { ResultProduct } from 'src/@types/product';
 
 
 class ProductController {
@@ -30,11 +31,11 @@ class ProductController {
 
   };
   
-  async getProductAll  (req: MyRequest, res: Response): Promise <any> {
-    const { message, success, status, data: allproduct } = await ProductService.getProductAll(req.body);
-    if (!success) return res.status(status).json({ message, success, });
+  async getProductAll  (req: Request, res: Response): Promise <any> {
+    const { message, success, status, allproduct } = await ProductService.getProductAll(req.body as ResultProduct);
+    if (!success) return res.status(status).json({ message, success });
     
-    return res.status(status).json({ success, message, data: allproduct });
+    return res.status(status).json({ success, message, allproduct });
   }
 
 }

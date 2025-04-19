@@ -4,11 +4,13 @@ import { ResultUser } from './user';
 export interface ResultProduct {
     id: number;
     name: string;
-    description?: string;
+    description: string;
     originalPrice: number;
     discountPrice?: number;
+    category?: string,
     categoryId: number;
     conditionId: number;
+    condition?: string;
     images?: string;
     location: string;
     contactPhone: string;

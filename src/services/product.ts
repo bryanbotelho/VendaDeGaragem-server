@@ -2,7 +2,7 @@ import Joi from 'joi';
 import { PrismaClient } from '@prisma/client';
 import { CreateProduct, ResultProduct } from '../@types/product';
 import { getMessage } from 'src/utils/messageHelper';
-import { CreateProductSchema, UpdateProductSchema } from 'src/schemas/product';
+import { CreateProductSchema, } from 'src/schemas/product';
 import { ResultUser } from 'src/@types/user';
 
 class ProductService {
@@ -25,6 +25,8 @@ class ProductService {
                 return { status: 400, success: false, message: errorMessage };
             }
 
+            const replacePhone = contactPhone.replace(/[^0-9]/g, '');
+
             await this.prisma.product.create({
 
                 data: {
@@ -37,7 +39,7 @@ class ProductService {
                     condition: {
                         connect: { id: conditionId }
                     },
-                    contactPhone,
+                    contactPhone: replacePhone,
                     location,
                     name,
                     originalPrice,
@@ -118,7 +120,7 @@ class ProductService {
     }
 
 
-    async getProductAll(user: any) {
+    async getProductAll(body: ResultProduct) {
         try {
             const allproduct = await this.prisma.product.findMany({
                 select: {
@@ -133,7 +135,7 @@ class ProductService {
                     contactPhone: true,
                 },
             });
-            return { status: 200, success: true, data: allproduct };
+            return { status: 200, success: true, allproduct };
             
         } catch (error) {
             console.error(error);
