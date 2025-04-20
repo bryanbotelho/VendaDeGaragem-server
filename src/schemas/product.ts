@@ -17,12 +17,12 @@ export const CreateProductSchema = (lang: 'pt' | 'en' = 'pt') => {
         }),
     
         originalPrice: Joi.number()
-        .greater(0)
+        .min(0)
         .precision(2)
         .required()
         .messages({
             'number.base': getMessage('ORIGINAL_PRICE_INVALID', lang),
-            'number.greater': getMessage('ORIGINAL_PRICE_THAN_ZERO', lang),
+            'number.min': getMessage('ORIGINAL_PRICE_ZERO', lang),
             'any.required': getMessage('FIELD_REQUIRED_ORIGINAL_PRICE', lang),
         }),
 
@@ -83,7 +83,7 @@ export const CreateProductSchema = (lang: 'pt' | 'en' = 'pt') => {
         images: Joi.array()
         .items(Joi.string().uri())
         .min(1)
-        .required()
+        // .required()
         .messages({
             'array.base': getMessage('IMAGES_INVALID', lang),
             'array.min': getMessage('IMAGES_MIN_ONE', lang),
@@ -95,7 +95,23 @@ export const CreateProductSchema = (lang: 'pt' | 'en' = 'pt') => {
         .messages({
             'boolean.base': getMessage('NEGOTIABLE_INVALID', lang),
             'any.required': getMessage('FIELD_REQUIRED_NEGOTIABLE', lang),
-        })
+        }),
+        
+        discountPrice: Joi.number()
+        .required()
+        .min(0)
+        .messages({
+            'number.base': getMessage('DISCOUNT_PRICE_INVALID', lang),
+            'num.min': getMessage('DISCOUNT_PRICE_MIN', lang),
+            'number.required': getMessage('DISCOUNT_PRICE_REQUIRED', lang),
+        }),
+
+        donate: Joi.boolean()
+        .required()
+        .messages({
+            'boolean.base': getMessage('DONATE_INVALID', lang),
+            'any.required': getMessage('DONATE_REQUIRED', lang),
+         }),
 
     });
 };

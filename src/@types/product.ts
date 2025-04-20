@@ -25,9 +25,12 @@ export interface CreateProduct {
     originalPrice: number;
     description?: string;
     categoryId: number;
+    discountPrice: number;
     conditionId: number;
     images?: string;
     location: string;
+    donate: boolean;
+    negotiable: boolean;
     contactPhone: string;
 }
 export interface updateProduct {

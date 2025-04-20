@@ -50,6 +50,7 @@ model Product {
   categoryId    Int
   userId        Int
   user          User      @relation(fields: [userId], references: [id])
+  donate        Boolean   @default(false)
   comments      Comment[]
 }
 

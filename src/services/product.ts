@@ -14,18 +14,41 @@ class ProductService {
     }
 
     async create(data: CreateProduct, user: any) {
-        const { categoryId, conditionId, contactPhone, location, name, originalPrice, description, images } = data;
+        const { name, description, originalPrice, discountPrice ,categoryId, images,  conditionId, location, negotiable, contactPhone, donate } = data;
         try {
 
             const validator: Joi.ValidationResult = CreateProductSchema(this.lang as 'pt')
-                .validate({ name, originalPrice, categoryId, location, contactPhone, conditionId });
+                .validate({ name, description, originalPrice, discountPrice ,categoryId, images,  conditionId, location, negotiable, contactPhone, donate });
 
             if (validator.error) {
                 const errorMessage = validator.error.details.map(err => err.message).join(', ');
                 return { status: 400, success: false, message: errorMessage };
             }
 
+            let finalDonate = donate ?? false;
+
+            if(originalPrice === 0 ){
+                finalDonate = true;
+            }
+            if(finalDonate && originalPrice !== 0){
+                return { status: 400, success: false, message: getMessage('DONATE_TRUE', this.lang as 'pt')};
+            }
+
             const replacePhone = contactPhone.replace(/[^0-9]/g, '');
+
+            const category_id = await this.prisma.category.findUnique({
+                where: { id: categoryId },
+            });
+            if(!category_id){
+                return { status: 400, success: false, message: getMessage('CATEGORY_ID_INVALID', this.lang as 'pt') };
+            };
+
+            const condition_id = await this.prisma.condition.findUnique({
+                where: { id: conditionId },
+            });
+            if(!condition_id){
+                return { status: 400, success: false, message: getMessage('CONDITION_ID_INVALID', this.lang as 'pt') };
+            }
 
             await this.prisma.product.create({
 
@@ -41,10 +64,13 @@ class ProductService {
                     },
                     contactPhone: replacePhone,
                     location,
+                    discountPrice,
                     name,
                     originalPrice,
                     description,
                     images,
+                    negotiable,
+                    donate: finalDonate,
                 }
             });
 
@@ -133,6 +159,8 @@ class ProductService {
                     categoryId: true,
                     location: true,
                     contactPhone: true,
+                    negotiable: true,
+                    donate: true
                 },
             });
             return { status: 200, success: true, allproduct };

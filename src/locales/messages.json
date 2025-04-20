@@ -34,7 +34,7 @@
     "PRODUCT_NOT_FOUND": "Produto não encontrado",
     "PRODUCT_UPDATE_SUCESSFULL": "Produto atualizado com sucesso",
     "LOGIN_ERROR": "E-mail ou senha invalido.",
-    "ORIGINAL_PRICE_THAN_ZERO": "O preço original deve ser maior que zero.",
+    "ORIGINAL_PRICE_ZERO": "O preço original deve ser maior ou igual a zero.",
     "FIELD_REQUIRED_ORIGINAL_PRICE": "O preço original é obrigatório.",
     "ORIGINAL_PRICE_INVALID": "O preço original deve ser um número.",
     "LOCATION_INVALID": "O endereço não é válido.",
@@ -61,7 +61,13 @@
     "IMAGES_MIN_ONE": "Você deve fornecer pelo menos uma imagem.",
     "FIELD_REQUIRED_IMAGES": "O campo de imagens é obrigatório.",
     "NEGOTIABLE_INVALID": "O campo negociável deve ser um valor booleano.",
-    "FIELD_REQUIRED_NEGOTIABLE": "O campo negociável é obrigatório."
+    "FIELD_REQUIRED_NEGOTIABLE": "O campo negociável é obrigatório.",
+    "DONATE_TRUE": "Donate precisa ser de valor zero",
+    "DISCOUNT_PRICE_REQUIRED": "Precisa contém ao menos 1 número",
+    "DISCOUNT_PRICE_INVALID": "Deve fornecer um número válido",
+    "DONATE_INVALID": "Deve fornecer true ou false",
+    "DONATE_REQUIRED":"Deve conter ao menos 1 propriedade",
+    "DISCOUNT_PRICE_MIN": "Deve conter 1 número"
 
   },
   "en": {
@@ -99,7 +105,7 @@
     "LOGIN_ERROR": "E-mail or senha invalid.",
     "ORIGINAL_PRICE_TOO_WEAK": "The original price must be greater than zero.",
     "FIELD_REQUIRED_ORIGINAL_PRICE": "The original price is required.",
-    "ORIGINAL_PRICE_THAN_ZERO": "The original price must be greater than zero.",
+    "ORIGINAL_PRICE_ZERO": "Original price must be greater than or equal to zero.",
     "ORIGINAL_PRICE_INVALID": "The original price must be a number.",
     "LOCATION_INVALID": "The address is not valid.",
     "LOCATION_EMPTY": "The address is required.",
@@ -127,7 +133,13 @@
     "IMAGES_MIN_ONE":  "You must provide at least one image.",
     "FIELD_REQUIRED_IMAGES": "The images field is required.",
     "NEGOTIABLE_INVALID": "The negotiable field must be a boolean value.",
-    "FIELD_REQUIRED_NEGOTIABLE":"The negotiable field is required."
+    "FIELD_REQUIRED_NEGOTIABLE":"The negotiable field is required.",
+    "DONATE_TRUE": "Donate must be of zero value",
+    "DISCOUNT_PRICE_REQUIRED": "Must contain at least 1 number",
+    "DISCOUNT_PRICE_INVALID": "Must provide a valid number",
+    "DONATE_INVALID": "Must provide true or false",
+    "DONATE_REQUIRED":"Must contain at least 1 property",
+    "DISCOUNT_PRICE_MIN": "Must contain 1 number"
 
   }
 }
