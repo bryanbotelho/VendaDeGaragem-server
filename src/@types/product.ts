@@ -7,17 +7,17 @@ export interface ResultProduct {
     description: string;
     originalPrice: number;
     discountPrice?: number;
-    category?: string,
-    categoryId: number;
-    conditionId: number;
-    condition?: string;
+    category?: any;
+    categoryId?: number;
+    conditionId?: number;
+    condition?: any;
     images?: string;
     location: string;
     contactPhone: string;
     createdAt: Date;
     negotiable: boolean;
-    userId: number;
-    user: ResultUser;
+    userId?: number;
+    user?: ResultUser;
     comments: ResultComment[];
 }
 export interface CreateProduct {
@@ -33,17 +33,17 @@ export interface CreateProduct {
     negotiable: boolean;
     contactPhone: string;
 }
-export interface updateProduct {
-    name: string;
-    description?: string;
-    originalPrice: number;
-    discountPrice?: number;
-    categoryId: number;
-    conditionId: number;
-    images?: string;
-    location: string;
-    contactPhone: string;
-    createdAt: Date;
-    negotiable: boolean;
-    userId: number;
-}
+// export interface updateProduct {
+//     name: string;
+//     description?: string;
+//     originalPrice: number;
+//     discountPrice?: number;
+//     categoryId: number;
+//     conditionId: number;
+//     images?: string;
+//     location: string;
+//     contactPhone: string;
+//     createdAt: Date;
+//     negotiable: boolean;
+//     userId: number;
+// }

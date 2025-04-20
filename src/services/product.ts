@@ -14,22 +14,19 @@ class ProductService {
     }
 
     async create(data: CreateProduct, user: any) {
-        const { name, description, originalPrice, discountPrice ,categoryId, images,  conditionId, location, negotiable, contactPhone, donate } = data;
+        const { name, description, originalPrice, discountPrice ,categoryId, images,  conditionId, location, negotiable, contactPhone } = data;
         try {
 
             const validator: Joi.ValidationResult = CreateProductSchema(this.lang as 'pt')
-                .validate({ name, description, originalPrice, discountPrice ,categoryId, images,  conditionId, location, negotiable, contactPhone, donate });
+                .validate({ name, description, originalPrice, discountPrice ,categoryId, images,  conditionId, location, negotiable, contactPhone });
 
             if (validator.error) {
                 const errorMessage = validator.error.details.map(err => err.message).join(', ');
                 return { status: 400, success: false, message: errorMessage };
             }
 
-            let finalDonate = donate ?? false;
-
-            if(originalPrice === 0 ){
-                finalDonate = true;
-            }
+            const finalDonate = originalPrice === 0;
+            
             if(finalDonate && originalPrice !== 0){
                 return { status: 400, success: false, message: getMessage('DONATE_TRUE', this.lang as 'pt')};
             }
@@ -64,13 +61,13 @@ class ProductService {
                     },
                     contactPhone: replacePhone,
                     location,
-                    discountPrice,
+                    // disconuntPrice,
                     name,
                     originalPrice,
                     description,
                     images,
-                    negotiable,
-                    donate: finalDonate,
+                    negotiable: negotiable || false,
+                    donate: finalDonate || false,
                 }
             });
 
