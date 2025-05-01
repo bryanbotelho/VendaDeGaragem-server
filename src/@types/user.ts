@@ -29,6 +29,7 @@ export interface ResultUser {
     resetToken: string | null;
     resetTokenExpires: Date | null;
     roles?: ResultUserRole[];
+    roleId?: number;
     comments?: ResultComment[];
     ratingsGiven?: ResultRating[];
     ratingsReceived?: ResultRating[];

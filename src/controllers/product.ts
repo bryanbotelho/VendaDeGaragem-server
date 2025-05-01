@@ -33,7 +33,7 @@ class ProductController {
   };
   
   async getProductAll  (req: Request, res: Response): Promise <any> {
-    const { message, success, status, allproduct } = await ProductService.getProductAll(req.body as ResultProduct);
+    const { message, success, status, allproduct } = await ProductService.getProductAll();
     if (!success) return res.status(status).json({ message, success });
     
     return res.status(status).json({ success, message, Result: allproduct });

@@ -89,16 +89,17 @@ class ProductService {
                 const errorMessage = validator.error.details.map(err => err.message).join(', ');
                 return { status: 400, success: false, message: errorMessage };
             }
-
             const existingProduct = await this.prisma.product.findUnique({
                 where: { id },
             });
 
+            
+
             if(!existingProduct){
                 return { status: 404, success: false, message: getMessage('PRODUCT_NOT_FOUND', this.lang as 'pt') };
             }
-
-            if(existingProduct.userId !== user.id){
+            
+            if(existingProduct.userId !== user.id && user.roleId !== 2){
                 return { status: 403, success: false, message: getMessage('USER_NOT_ALLOWED', this.lang as 'pt') };
             }
             const finalDonate = originalPrice === 0;
@@ -156,7 +157,7 @@ class ProductService {
     }
 
 
-    async getProductAll(body: ResultProduct) {
+    async getProductAll() {
         try {
             const allproduct = await this.prisma.product.findMany({
                 select: {
