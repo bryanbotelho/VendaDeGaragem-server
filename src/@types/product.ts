@@ -33,17 +33,17 @@ export interface CreateProduct {
     negotiable: boolean;
     contactPhone: string;
 }
-// export interface updateProduct {
-//     name: string;
-//     description?: string;
-//     originalPrice: number;
-//     discountPrice?: number;
-//     categoryId: number;
-//     conditionId: number;
-//     images?: string;
-//     location: string;
-//     contactPhone: string;
-//     createdAt: Date;
-//     negotiable: boolean;
-//     userId: number;
-// }
+export interface UpdateProduct {
+    id?: number;
+    name?: string;
+    description?: string;
+    originalPrice?: number;
+    discountPrice?: number;
+    categoryId?: number;
+    conditionId?: number;
+    images?: string[]; 
+    location?: string;
+    contactPhone: string;
+    negotiable?: boolean;
+    donate?: boolean;
+}

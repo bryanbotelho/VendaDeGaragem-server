@@ -1,8 +1,8 @@
 import Joi from 'joi';
 import { PrismaClient } from '@prisma/client';
-import { CreateProduct, ResultProduct } from '../@types/product';
+import { CreateProduct, ResultProduct, UpdateProduct} from '../@types/product';
 import { getMessage } from 'src/utils/messageHelper';
-import { CreateProductSchema, } from 'src/schemas/product';
+import { CreateProductSchema, DeleteProductSchema, UpdateProductSchema} from 'src/schemas/product';
 import { ResultUser } from 'src/@types/user';
 
 class ProductService {
@@ -13,7 +13,7 @@ class ProductService {
         this.prisma = new PrismaClient();
     }
 
-    async create(data: CreateProduct, user: any) {
+    async create(data: CreateProduct, user: ResultUser) {
         const { name, description, originalPrice, discountPrice ,categoryId, images,  conditionId, location, negotiable, contactPhone } = data;
         try {
 
@@ -79,53 +79,66 @@ class ProductService {
         }
     }
 
-    // async updateProduct(data: ResultProduct, user: ResultUser ) {
-    //     const { id ,categoryId, conditionId, contactPhone, location, name, originalPrice, description, images } = data;
-    //     try {
-    //         const validator: Joi.ValidationResult = UpdateProductSchema(this.lang as 'pt')
-    //             .validate({ name, originalPrice, categoryId, location, contactPhone, conditionId, description, images });
+    async updateProduct(id: number, data: UpdateProduct, user: ResultUser) {
+        const { categoryId, conditionId, contactPhone, location, name, originalPrice, description, images, negotiable } = data;
+        try {
+            const validator: Joi.ValidationResult = UpdateProductSchema(this.lang as 'pt')
+                .validate({ categoryId, conditionId, contactPhone, location, name, originalPrice, description, images, negotiable});
 
-    //         if (validator.error) {
-    //             const errorMessage = validator.error.details.map(err => err.message).join(', ');
-    //             return { status: 400, success: false, message: errorMessage };
-    //         }
+            if (validator.error) {
+                const errorMessage = validator.error.details.map(err => err.message).join(', ');
+                return { status: 400, success: false, message: errorMessage };
+            }
 
-    //         const existingProduct = await this.prisma.product.findUnique({
-    //             where: { id: id }
-    //         });
+            const existingProduct = await this.prisma.product.findUnique({
+                where: { id },
+            });
 
-    //         if(!existingProduct){
-    //             return { status: 404, success: false, message: getMessage('PRODUCT_NOT_FOUND', this.lang as 'pt') };
-    //         }
+            if(!existingProduct){
+                return { status: 404, success: false, message: getMessage('PRODUCT_NOT_FOUND', this.lang as 'pt') };
+            }
 
-    //         if(existingProduct.userId !== user.id){
-    //             return { status: 403, success: false, message: getMessage('USER_NOT_ALLOWED', this.lang as 'pt') };
-    //         }
+            if(existingProduct.userId !== user.id){
+                return { status: 403, success: false, message: getMessage('USER_NOT_ALLOWED', this.lang as 'pt') };
+            }
+            const finalDonate = originalPrice === 0;
             
-    //         await this.prisma.product.update({
-    //             where: { id: id },
-    //             data: {
-    //                 category: {
-    //                     connect: { id: categoryId }
-    //                 },
-    //                 condition: {
-    //                     connect: { id: conditionId }
-    //                 },
-    //                 contactPhone,
-    //                 location,
-    //                 name,
-    //                 originalPrice,
-    //                 description,
-    //                 images,
-    //             }
-    //         });
+            if(finalDonate && originalPrice !== 0){
+                return { status: 400, success: false, message: getMessage('DONATE_TRUE', this.lang as 'pt')};
+            }
+            
+            const replacePhone = contactPhone.replace(/[^0-9]/g, '');
+            
+            await this.prisma.product.update({
+                where: { id },
+                data: {
+                    user: {
+                        connect: { id: user.id}
+                    },
+                    category: {
+                        connect: { id: categoryId }
+                    },
+                    condition: {
+                        connect: { id: conditionId }
+                    },
+                    contactPhone: replacePhone,
+                    location,
+                    // disconuntPrice,
+                    name,
+                    originalPrice,
+                    description,
+                    images,
+                    negotiable: negotiable || false,
+                    donate: finalDonate || false,
+                }
+            });
         
-    //         return { status: 200, success: true, message: getMessage('PRODUCT_UPDATE_SUCESSFULL', this.lang as 'pt'), data};
-    //     }catch (error) {
-    //             console.error(error);
-    //             return { status: 500, success: false, message: getMessage('SERVER_ERROR', this.lang as 'pt') };
-    //     }
-    // }
+            return { status: 200, success: true, message: getMessage('PRODUCT_UPDATE_SUCESSFULL', this.lang as 'pt'), data};
+        }catch (error) {
+                console.error(error);
+                return { status: 500, success: false, message: getMessage('SERVER_ERROR', this.lang as 'pt') };
+        }
+    }
 
 
 
@@ -165,6 +178,42 @@ class ProductService {
         } catch (error) {
             console.error(error);
             return { status: 500, success: false, message: getMessage('SERVER_ERROR', this.lang as 'pt') };
+        }
+    }
+
+
+    async deleteProduct( id: number,  user: ResultUser){
+        try {
+    
+            const validator: Joi.ValidationResult = DeleteProductSchema(this.lang as 'pt')
+                .validate({ id });
+            
+            if (validator.error) {
+                const errorMessage = validator.error.details.map(err => err.message).join(', ');
+                return { status: 400, success: false, message: errorMessage };
+            }
+            
+            const existingProduct = await this.prisma.product.findUnique({
+                where: { id },
+            });
+            
+            if(!existingProduct){
+                return { status: 404, success: false, message: getMessage('PRODUCT_NOT_FOUND', this.lang as 'pt') };
+            }
+
+            if(existingProduct.userId !== user.id){
+                return { status: 403, success: false, message: getMessage('USER_NOT_ALLOWED', this.lang as 'pt') };
+            }
+
+            await this.prisma.product.delete({
+                where: { id },
+            
+        });
+        return { status: 200, success: true, message: getMessage('PRODUCT_DELETE_SUCCESS', this.lang as 'pt')};
+
+        }catch (error) {
+        console.error(error);
+        return { status: 500, success: false, message: getMessage('SERVER_ERROR', this.lang as 'pt') };
         }
     }
 
