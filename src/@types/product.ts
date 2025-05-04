@@ -25,6 +25,7 @@ export interface CreateProduct {
     originalPrice: number;
     description: string;
     categoryId: number;
+    quantidade: number;
     discountPrice: number;
     conditionId: number;
     images?: string;
@@ -38,6 +39,7 @@ export interface UpdateProduct {
     id?: number;
     name?: string;
     description?: string;
+    quantidade?: number;
     originalPrice?: number;
     discountPrice?: number;
     categoryId?: number;

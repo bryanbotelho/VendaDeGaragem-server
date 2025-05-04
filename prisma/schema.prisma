@@ -38,7 +38,8 @@ model Product {
   name          String
   description   String
   originalPrice Float
-  discountPrice Float?
+  discountPrice Float?    
+  quantidade    Int       @default(1)
   condition     Condition @relation(fields: [conditionId], references: [id])
   conditionId   Int
   images        Json?

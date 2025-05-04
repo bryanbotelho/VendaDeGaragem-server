@@ -74,8 +74,10 @@
     "DELETE_PRODUCT_ID_GREATER": "O valor não pode ser nulo.",
     "DELETE_PRODUCT_ID_MIN_LENGTH": "O valor deve conter pelo menos 1 número.",
     "DELETE_PRODUCT_ID_EMPTY": "O campo não pode ser vazio.",
-    "DELETE_PRODUCT_ID_REQUIRED": "Este campo é obrigatório."
-
+    "DELETE_PRODUCT_ID_REQUIRED": "Este campo é obrigatório.",
+    "QUANTITY_INTEGER":"O valor deve contér somente números inteiros",
+    "QUANTITY_GREATER":"A quantidade deve ser maior que zero"
+    
   },
   "en": {
     "USER_EXISTS_EMAIL": "A user with this email already exists.",
@@ -153,7 +155,9 @@
     "DELETE_PRODUCT_ID_GREATER": "The value cannot be null.",
     "DELETE_PRODUCT_ID_MIN_LENGTH": "The value must contain at least 1 number.",
     "DELETE_PRODUCT_ID_EMPTY": "The field cannot be empty.",
-    "DELETE_PRODUCT_ID_REQUIRED": "This field is required."
+    "DELETE_PRODUCT_ID_REQUIRED": "This field is required.",
+    "QUANTITY_INTEGER": "Value must contain only integers",
+    "QUANTITY_GREATER":"Value must be greater than zero"
 
   }
 }

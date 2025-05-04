@@ -89,10 +89,8 @@ export const CreateProductSchema = (lang: 'pt' | 'en' = 'pt') => {
         }),
 
         negotiable: Joi.boolean()
-        .required()
         .messages({
             'boolean.base': getMessage('NEGOTIABLE_INVALID', lang),
-            'any.required': getMessage('FIELD_REQUIRED_NEGOTIABLE', lang),
         }),
         
         discountPrice: Joi.number()
@@ -105,10 +103,16 @@ export const CreateProductSchema = (lang: 'pt' | 'en' = 'pt') => {
         }),
 
         donate: Joi.boolean()
-        .required()
         .messages({
             'boolean.base': getMessage('DONATE_INVALID', lang),
-            'any.required': getMessage('DONATE_REQUIRED', lang),
+         }),
+
+         quantidade: Joi.number()
+         .integer()
+         .greater(0)
+         .messages({
+            'number.integer': getMessage('QUANTITY_INTEGER', lang),
+            'number.greater': getMessage('QUANTITY_GREATER', lang),
          }),
 
     });
@@ -199,6 +203,14 @@ export const UpdateProductSchema = (lang: 'pt' | 'en' = 'pt') => {
         donate: Joi.boolean()
         .messages({
             'boolean.base': getMessage('DONATE_INVALID', lang),
+         }),
+        
+         quantidade: Joi.number()
+         .integer()
+         .greater(0)
+         .messages({
+            'number.integer': getMessage('QUANTITY_INTEGER', lang),
+            'number.greater': getMessage('QUANTITY_GREATER', lang),
          }),
 
     });

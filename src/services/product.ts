@@ -14,11 +14,11 @@ class ProductService {
     }
 
     async create(data: CreateProduct, user: ResultUser) {
-        const { name, description, originalPrice, discountPrice ,categoryId, images,  conditionId, location, negotiable, contactPhone } = data;
+        const { name, quantidade, description, originalPrice, discountPrice ,categoryId, images,  conditionId, location, negotiable, contactPhone } = data;
         try {
 
             const validator: Joi.ValidationResult = CreateProductSchema(this.lang as 'pt')
-                .validate({ name, description, originalPrice, discountPrice ,categoryId, images,  conditionId, location, negotiable, contactPhone });
+                .validate({ name, description,quantidade, originalPrice, discountPrice ,categoryId, images,  conditionId, location, negotiable, contactPhone });
 
             if (validator.error) {
                 const errorMessage = validator.error.details.map(err => err.message).join(', ');
@@ -65,6 +65,7 @@ class ProductService {
                     name,
                     originalPrice,
                     description,
+                    quantidade,
                     images,
                     negotiable: negotiable || false,
                     donate: finalDonate || false,
@@ -81,7 +82,7 @@ class ProductService {
     }
 
     async updateProduct(id: number, data: UpdateProduct, user: ResultUser) {
-        const { categoryId, conditionId, contactPhone, location, name, originalPrice, description, images, negotiable } = data;
+        const { categoryId, quantidade, conditionId, contactPhone, location, name, originalPrice, description, images, negotiable } = data;
         try {
             const validator: Joi.ValidationResult = UpdateProductSchema(this.lang as 'pt')
                 .validate({ categoryId, conditionId, contactPhone, location, name, originalPrice, description, images, negotiable});
@@ -95,7 +96,6 @@ class ProductService {
             });
 
             
-
             if(!existingProduct){
                 return { status: 404, success: false, message: getMessage('PRODUCT_NOT_FOUND', this.lang as 'pt') };
             }
@@ -103,8 +103,8 @@ class ProductService {
             if(existingProduct.userId !== user.id && user.roleId !== 2){
                 return { status: 403, success: false, message: getMessage('USER_NOT_ALLOWED', this.lang as 'pt') };
             }
-            const finalDonate = originalPrice === 0;
-            
+            const finalDonate = originalPrice === 0 || quantidade === 0;
+
             if(finalDonate && originalPrice !== 0){
                 return { status: 400, success: false, message: getMessage('DONATE_TRUE', this.lang as 'pt')};
             }
@@ -129,6 +129,7 @@ class ProductService {
                     name,
                     originalPrice,
                     description,
+                    quantidade,
                     images,
                     negotiable: negotiable || false,
                     donate: finalDonate || false,
@@ -172,6 +173,7 @@ class ProductService {
                     conditionId: true,
                     categoryId: true,
                     location: true,
+                    quantidade: true,
                     contactPhone: true,
                     negotiable: true,
                     donate: true,
