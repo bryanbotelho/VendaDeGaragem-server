@@ -221,35 +221,5 @@ class ProductService {
         }
     }
 
-    async getProductAllFalse(user: ResultUser){
-        try{
-            if(user.roleId !== 2){
-            return { status: 403, success: false, message: getMessage('USER_NOT_VIEW', this.lang as 'pt') };
-            }
-
-            const getAllProductFalse = await this.prisma.product.findMany({
-                where: { active: false,
-                },
-                select: {
-                    userId: true,
-                    id: true,
-                    name: true,
-                    originalPrice: true,
-                    discountPrice: true,
-                    conditionId: true,
-                    categoryId: true,
-                    location: true,
-                    contactPhone: true,
-                    negotiable: true,
-                    donate: true,
-                },
-            }); 
-            return { status: 200, success: true, getAllProductFalse };
-            
-        } catch (error) {
-            console.error(error);
-        return { status: 500, success: false, message: getMessage('SERVER_ERROR', this.lang as 'pt') };
-        }
-    }
 }
 export default new ProductService();

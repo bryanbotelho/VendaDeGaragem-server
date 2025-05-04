@@ -47,16 +47,6 @@ class ProductController {
     return res.status(status).json({ success, message, });
 
   }
-
-  async getProductAllFalse  (req: MyRequest, res: Response): Promise <any> {
-    const { message, success, status, getAllProductFalse } = await ProductService.getProductAllFalse(req.user as ResultUser);
-    if (!success) return res.status(status).json({ message, success });
-    
-    return res.status(status).json({ success, message, Result: getAllProductFalse });
-  }
-
-
-
 }
 
 export default new ProductController();
