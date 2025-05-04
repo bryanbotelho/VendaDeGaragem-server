@@ -2,7 +2,7 @@ import { Response, Request } from 'express';
 import ProductService from '../services/product';
 import { MyRequest } from '../@types/auth';
 import { ResultUser } from 'src/@types/user';
-import {ResultProduct, UpdateProduct } from 'src/@types/product';
+import { UpdateProduct } from 'src/@types/product';
 
 
 class ProductController {
@@ -47,6 +47,16 @@ class ProductController {
     return res.status(status).json({ success, message, });
 
   }
+
+  async getProductAllFalse  (req: MyRequest, res: Response): Promise <any> {
+    const { message, success, status, getAllProductFalse } = await ProductService.getProductAllFalse(req.user as ResultUser);
+    if (!success) return res.status(status).json({ message, success });
+    
+    return res.status(status).json({ success, message, Result: getAllProductFalse });
+  }
+
+
+
 }
 
 export default new ProductController();

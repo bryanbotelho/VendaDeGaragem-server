@@ -8,6 +8,7 @@ router.post('/create',AuthMiddleware.validateToken, ProductController.create);
 router.get('/getByUser', AuthMiddleware.validateToken, ProductController.getProductByUser);
 
 router.get('/getProductAll', ProductController.getProductAll);
+router.get('/getProductAllFalse', AuthMiddleware.validateToken, ProductController.getProductAllFalse);
 
 router.put('/updateproduct/:id', AuthMiddleware.validateToken, ProductController.updateProduct);
 

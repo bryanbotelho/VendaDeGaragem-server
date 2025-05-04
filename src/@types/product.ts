@@ -23,7 +23,7 @@ export interface ResultProduct {
 export interface CreateProduct {
     name: string;
     originalPrice: number;
-    description?: string;
+    description: string;
     categoryId: number;
     discountPrice: number;
     conditionId: number;
@@ -32,6 +32,7 @@ export interface CreateProduct {
     donate: boolean;
     negotiable: boolean;
     contactPhone: string;
+    active: boolean;
 }
 export interface UpdateProduct {
     id?: number;
@@ -46,4 +47,5 @@ export interface UpdateProduct {
     contactPhone: string;
     negotiable?: boolean;
     donate?: boolean;
+    
 }
