@@ -49,5 +49,6 @@ export interface UpdateProduct {
     contactPhone: string;
     negotiable?: boolean;
     donate?: boolean;
+    active?: boolean;
     
 }

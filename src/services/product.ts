@@ -94,7 +94,6 @@ class ProductService {
             const existingProduct = await this.prisma.product.findUnique({
                 where: { id },
             });
-
             
             if(!existingProduct){
                 return { status: 404, success: false, message: getMessage('PRODUCT_NOT_FOUND', this.lang as 'pt') };
@@ -103,12 +102,14 @@ class ProductService {
             if(existingProduct.userId !== user.id && user.roleId !== 2){
                 return { status: 403, success: false, message: getMessage('USER_NOT_ALLOWED', this.lang as 'pt') };
             }
-            const finalDonate = originalPrice === 0 || quantidade === 0;
+            const finalDonate = originalPrice === 0;
 
             if(finalDonate && originalPrice !== 0){
                 return { status: 400, success: false, message: getMessage('DONATE_TRUE', this.lang as 'pt')};
             }
-            
+          
+
+          
             const replacePhone = contactPhone.replace(/[^0-9]/g, '');
             
             await this.prisma.product.update({
@@ -133,6 +134,8 @@ class ProductService {
                     images,
                     negotiable: negotiable || false,
                     donate: finalDonate || false,
+                    active: quantidade !== 0,
+                    
                 }
             });
         
