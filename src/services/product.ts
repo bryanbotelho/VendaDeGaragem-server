@@ -162,11 +162,52 @@ class ProductService {
     }
 
 
-    async getProductAll() {
+    async getProductAll(query: any) {
         try {
+            const {name, originalPrice, discountPrice, conditionId, categoryId, page = 1, limit = 20 } = query;
+            const skip = (page - 1)* limit;
+
+            const filters: any = {active: true,};
+
+            if(name){
+                filters.name = {
+                    contains: name,
+                    mode: 'insensitive',
+                };
+            }
+
+            if ( originalPrice || discountPrice ){
+                if (originalPrice && !isNaN (parseFloat(originalPrice))){
+                    filters.originalPrice = {
+                        gte: parseFloat(originalPrice),
+                    };
+                }
+                if (discountPrice && !isNaN (parseFloat(discountPrice))){
+                    filters.discountPrice = {
+                        gte: parseFloat(discountPrice),
+                    };
+                }
+            }
+            const parsedConditionId = parseInt(conditionId);
+            const parsedCategoryId = parseInt(categoryId);
+            
+            if (!isNaN(parsedConditionId) && parsedConditionId >= 1 && parsedConditionId <= 100) {
+              filters.conditionId = parsedConditionId;
+            }
+            
+            if (!isNaN(parsedCategoryId) && parsedCategoryId >= 1 && parsedCategoryId <= 100) {
+              filters.categoryId = parsedCategoryId;
+            }
+            
+
             const allproduct = await this.prisma.product.findMany({
-                where: {active: true,
+                where:{
+                    active: true,
+                    ...filters,
                 },
+                    skip: Number(skip),
+                    take: Number(limit),
+                    
                 select: {
                     userId: true,
                     id: true,
@@ -182,8 +223,13 @@ class ProductService {
                     donate: true,
                 },
             });
-            return { status: 200, success: true, allproduct };
-            
+
+            const total = await this.prisma.product.count({ where: filters });
+
+            return { status: 200, success: true, allproduct, pagination: { total, page: Number(page), limit: Number(limit), totalpage: Math.ceil(total / Number(limit))} 
+        
+            };
+         
         } catch (error) {
             console.error(error);
             return { status: 500, success: false, message: getMessage('SERVER_ERROR', this.lang as 'pt') };
