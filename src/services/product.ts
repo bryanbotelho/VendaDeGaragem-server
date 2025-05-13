@@ -164,7 +164,7 @@ class ProductService {
 
     async getProductAll(query: any) {
         try {
-            const {name, originalPrice, discountPrice, conditionId, categoryId, page = 1, limit = 20 } = query;
+            const {name, originalPrice, discountPrice, conditionId, categoryId, page = 1, limit = 20, sortBy, order } = query;
             const skip = (page - 1)* limit;
 
             const filters: any = {active: true,};
@@ -198,7 +198,11 @@ class ProductService {
             if (!isNaN(parsedCategoryId) && parsedCategoryId >= 1 && parsedCategoryId <= 100) {
               filters.categoryId = parsedCategoryId;
             }
-            
+
+            const orderBy = (sortBy === 'name' || sortBy === 'originalPrice' || sortBy === 'discountPrice' || sortBy === 'conditionId' || sortBy === 'categoryId') 
+            ? { [sortBy]: order === 'desc' ? 'desc' : 'asc' } 
+            : undefined;
+
 
             const allproduct = await this.prisma.product.findMany({
                 where:{
@@ -207,7 +211,7 @@ class ProductService {
                 },
                     skip: Number(skip),
                     take: Number(limit),
-                    
+                    orderBy, 
                 select: {
                     userId: true,
                     id: true,
