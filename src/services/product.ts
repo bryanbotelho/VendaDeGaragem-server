@@ -179,12 +179,12 @@ class ProductService {
             if ( originalPrice || discountPrice ){
                 if (originalPrice && !isNaN (parseFloat(originalPrice))){
                     filters.originalPrice = {
-                        gte: parseFloat(originalPrice),
+                        lte: parseFloat(originalPrice),
                     };
                 }
                 if (discountPrice && !isNaN (parseFloat(discountPrice))){
                     filters.discountPrice = {
-                        gte: parseFloat(discountPrice),
+                        lte: parseFloat(discountPrice),
                     };
                 }
             }
