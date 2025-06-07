@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["ESNext", "DOM"],
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "target": "es2017",
+    "lib": ["es6"],
+    "module": "commonjs",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/@types",
+    ],
     "allowJs": true,
     "resolveJsonModule": true,
     "outDir": "./dist",
@@ -17,11 +19,7 @@
       "@controllers/*": ["./src/controllers/*"],
       "@models/*": ["./src/models/*"],
       "@services/*": ["./src/services/*"],
-      "@middlewares/*": ["./src/middlewares/*"]
-    },
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "strictPropertyInitialization": false,
-    "sourceMap": true
-  }
+      "@middlewares/*": ["./src/middlewares/*"],
+    }
+  },
 }

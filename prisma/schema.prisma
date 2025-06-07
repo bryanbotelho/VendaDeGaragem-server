@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int       @id @default(autoincrement())
+  name              String
+  email             String    @unique
+  password          String
+  phone             String    @unique
+  createdAt         DateTime  @default(now())
+  active            Boolean   @default(true)
+  resetToken        String?
+  resetTokenExpires DateTime?
+  roleId            Int
+  role              Role      @relation(fields: [roleId], references: [id])
+  comments          Comment[]
+  ratingsGiven      Rating[]  @relation("ratingsGiven")
+  ratingsReceived   Rating[]  @relation("ratingsReceived")
+  products          Product[]
+
+  @@map("users")
+}
+
+model Role {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  users User[]
+}
+
+model Product {
+  id            Int       @id @default(autoincrement())
+  name          String
+  description   String
+  originalPrice Float
+  discountPrice Float?
+  condition     Condition @relation(fields: [conditionId], references: [id])
+  conditionId   Int
+  images        Json?
+  location      String
+  contactPhone  String
+  createdAt     DateTime  @default(now())
+  negotiable    Boolean   @default(false)
+  category      Category  @relation(fields: [categoryId], references: [id])
+  categoryId    Int
+  userId        Int
+  user          User      @relation(fields: [userId], references: [id])
+  donate        Boolean   @default(false)
+  comments      Comment[]
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[]
+}
+
+model Condition {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  productId Int
+  userId    Int
+  text      String
+  createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Rating {
+  id         Int      @id @default(autoincrement())
+  reviewerId Int
+  ratedId    Int
+  stars      Int
+  comment    String?
+  createdAt  DateTime @default(now())
+  reviewer   User     @relation("ratingsGiven", fields: [reviewerId], references: [id])
+  rated      User     @relation("ratingsReceived", fields: [ratedId], references: [id])
+}

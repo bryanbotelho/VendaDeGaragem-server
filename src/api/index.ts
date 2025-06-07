@@ -1,6 +1,11 @@
 import express, { Application } from 'express';
 import cors from 'cors';
-// import MiddlewareError from '../middlewares/error';
+import dotenv from 'dotenv';
+
+import UserRouter from '../routes/user';
+import ProductRouter from '../routes/product';
+
+dotenv.config();
 
 class App {
   public app: Application;
@@ -20,7 +25,8 @@ class App {
   }
 
   private routes(): void {
-    
+    this.app.use('/user', UserRouter);
+    this.app.use('/product', ProductRouter);
   }
 
   public getApp(): Application {
