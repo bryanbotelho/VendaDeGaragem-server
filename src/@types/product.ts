@@ -23,8 +23,9 @@ export interface ResultProduct {
 export interface CreateProduct {
     name: string;
     originalPrice: number;
-    description?: string;
+    description: string;
     categoryId: number;
+    quantidade: number;
     discountPrice: number;
     conditionId: number;
     images?: string;
@@ -32,18 +33,22 @@ export interface CreateProduct {
     donate: boolean;
     negotiable: boolean;
     contactPhone: string;
+    active: boolean;
 }
-// export interface updateProduct {
-//     name: string;
-//     description?: string;
-//     originalPrice: number;
-//     discountPrice?: number;
-//     categoryId: number;
-//     conditionId: number;
-//     images?: string;
-//     location: string;
-//     contactPhone: string;
-//     createdAt: Date;
-//     negotiable: boolean;
-//     userId: number;
-// }
+export interface UpdateProduct {
+    id?: number;
+    name?: string;
+    description?: string;
+    quantidade?: number;
+    originalPrice?: number;
+    discountPrice?: number;
+    categoryId?: number;
+    conditionId?: number;
+    images?: string[]; 
+    location?: string;
+    contactPhone: string;
+    negotiable?: boolean;
+    donate?: boolean;
+    active?: boolean;
+    
+}

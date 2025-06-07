@@ -3,6 +3,7 @@
     "target": "es2017",
     "lib": ["es6"],
     "module": "commonjs",
+    "sourceMap": true,
     "typeRoots": [
       "./node_modules/@types",
       "./src/@types",

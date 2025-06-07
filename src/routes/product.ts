@@ -9,6 +9,8 @@ router.get('/getByUser', AuthMiddleware.validateToken, ProductController.getProd
 
 router.get('/getProductAll', ProductController.getProductAll);
 
-// router.put('/updateproduct/:id ', AuthMiddleware.validateToken, ProductController.updateProduct);
+router.put('/updateproduct/:id', AuthMiddleware.validateToken, ProductController.updateProduct);
+
+router.delete('/deleteProduct/:id', AuthMiddleware.validateToken, ProductController.deleteProduct);
 
 export default router;
