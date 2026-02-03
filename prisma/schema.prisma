@@ -23,6 +23,8 @@ model User {
   ratingsGiven      Rating[]  @relation("ratingsGiven")
   ratingsReceived   Rating[]  @relation("ratingsReceived")
   products          Product[]
+  sales_as_buyer    Sale[]    @relation("BuyerSales")
+  sales_as_saller   Sale[]    @relation("SellerSales")
 
   @@map("users")
 }
@@ -88,3 +90,20 @@ model Rating {
   reviewer   User     @relation("ratingsGiven", fields: [reviewerId], references: [id])
   rated      User     @relation("ratingsReceived", fields: [ratedId], references: [id])
 }
+
+model Sale {
+  id             Int      @id @default(autoincrement())
+  order_number   Int      
+  transaction_id Int      
+  original_price Float
+  sale_price     Float
+  paid_price     Float
+  sale_date      DateTime @default(now())
+  update_at      DateTime @default(now())
+  buyer_id       Int
+  seller_id      Int
+  buyer          User     @relation("BuyerSales", fields: [buyer_id], references: [id])
+  seller         User     @relation("SellerSales", fields: [seller_id], references: [id])
+  created_at     DateTime @default(now())
+}
+

@@ -264,10 +264,11 @@ class ProductService {
                 return { status: 403, success: false, message: getMessage('USER_NOT_ALLOWED', this.lang as 'pt') };
             }
 
-            await this.prisma.product.delete({
+            await this.prisma.product.update({
                 where: { id },
+                data: { active: false }
+            });
             
-        });
         return { status: 200, success: true, message: getMessage('PRODUCT_DELETE_SUCCESS', this.lang as 'pt')};
 
         }catch (error) {
