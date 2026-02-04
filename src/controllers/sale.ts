@@ -1,5 +1,4 @@
 import { Response, Request } from 'express';
-import ProductService from '../services/product';
 import { MyRequest } from '../@types/auth';
 import { ResultUser } from 'src/@types/user';
 import SaleService from '@services/sale';
