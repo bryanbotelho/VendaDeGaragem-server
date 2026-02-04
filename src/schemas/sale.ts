@@ -30,13 +30,7 @@ export const CreateSaleSchema = (lang = 'pt') =>
       .precision(2)
       .positive()
       .required(),
-
-    payment_method: Joi.string()
-      .required(),
-
-    payment_status: Joi.string()
-      .required(),
-
+      
     buyer_id: Joi.string()
       .uuid()
       .required(),

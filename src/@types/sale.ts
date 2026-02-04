@@ -1,7 +1,7 @@
 
 
 export interface CreateSale {
-  id: number;
+  product_id: number;
   order_number: number;
   trasaction_id: string;
   original_price: number;
@@ -11,7 +11,6 @@ export interface CreateSale {
   payment_status: string;
   buyer_id: string;
   seller_id: string;
-  product_id: string;
   sale_date: Date;
     
 }
